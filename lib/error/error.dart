@@ -44,6 +44,9 @@ abstract class IException implements Exception {
         );
     }
   }
+
+  @override
+  String toString() => display;
 }
 
 /// 网络异常
@@ -56,11 +59,6 @@ class NetworkException implements IException {
   final Object? error;
 
   final int code;
-
-  @override
-  String toString() {
-    return 'NetworkException{code: $code, display: $display, error: $error}';
-  }
 }
 
 class UnknownException implements IException {
@@ -70,9 +68,4 @@ class UnknownException implements IException {
   final String display;
 
   final Object? error;
-
-  @override
-  String toString() {
-    return 'SeeException{display: $display, error: $error}';
-  }
 }
