@@ -59,6 +59,9 @@ class NetworkException implements IException {
   final Object? error;
 
   final int code;
+
+  @override
+  String toString() => display;
 }
 
 class UnknownException implements IException {
@@ -68,4 +71,7 @@ class UnknownException implements IException {
   final String display;
 
   final Object? error;
+
+  @override
+  String toString() => display;
 }
