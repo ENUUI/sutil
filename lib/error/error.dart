@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 /// 错误异常
 abstract class IException implements Exception {
+  /// 错误显示信息, 通常用来Toast显示, 或者显示在页面上
   String get display;
 
   factory IException.from(Object? error) {
@@ -11,7 +12,7 @@ abstract class IException implements Exception {
     if (error is DioException) {
       return IException._fromDio(error);
     }
-    return UnknownException(error: error);
+    return DefaultException(error: error);
   }
 
   static IException _fromDio(DioException error) {
@@ -44,9 +45,21 @@ abstract class IException implements Exception {
         );
     }
   }
+}
+
+/// 默认异常
+class DefaultException implements IException {
+  const DefaultException({this.display = '未知错误', this.error});
 
   @override
-  String toString() => display;
+  final String display;
+
+  final Object? error;
+
+  @override
+  String toString() {
+    return 'DefaultException{display: $display, error: $error}';
+  }
 }
 
 /// 网络异常
@@ -61,17 +74,29 @@ class NetworkException implements IException {
   final int code;
 
   @override
-  String toString() => display;
+  String toString() {
+    return 'NetworkException{code: $code, display: $display, error: $error}';
+  }
 }
 
-class UnknownException implements IException {
-  const UnknownException({this.display = '未知错误', this.error});
+class ArgumentException implements IException {
+  const ArgumentException({
+    this.display = '参数错误',
+    this.field,
+    this.value,
+  });
 
   @override
   final String display;
 
-  final Object? error;
+  // 字段名称
+  final String? field;
+
+  // 字段value
+  final Object? value;
 
   @override
-  String toString() => display;
+  String toString() {
+    return 'ArgumentException{display: $display, field: $field, value: $value}';
+  }
 }
