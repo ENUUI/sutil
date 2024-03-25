@@ -1,9 +1,10 @@
 import 'package:intl/intl.dart';
+import '../extensions/date.dart';
 
-const second = 1000;
-const minutesMilli = 60 * second;
-const hourMilli = 60 * minutesMilli;
-const dayMilli = 24 * hourMilli;
+const kSecondMilli = 1000;
+const kMinutesMilli = 60 * kSecondMilli;
+const kHourMilli = 60 * kMinutesMilli;
+const kDayMilli = 24 * kHourMilli;
 
 /// 格式化时间
 class Format {
@@ -13,10 +14,8 @@ class Format {
 
   static String nowTime([String f = 'yyyy年MM月']) => Format.f(now(), f);
 
-  static String f(int milliseconds,
-      [String f = 'yyyy年MM月dd日', bool accurateMonth = false]) {
+  static String f(int milliseconds, [String f = 'yyyy年MM月dd日', bool accurateMonth = false]) {
     if (accurateMonth) {
-      // todo 1900/01 正常格式化时结果异常
       milliseconds = (milliseconds ~/ (3600 * 1000)) * 3600 * 1000;
     }
     final date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
@@ -24,8 +23,7 @@ class Format {
   }
 
   static String formatYear(int milliseconds) {
-    if (DateTime.now().year ==
-        DateTime.fromMillisecondsSinceEpoch(milliseconds).year) {
+    if (DateTime.now().year == DateTime.fromMillisecondsSinceEpoch(milliseconds).year) {
       return f(milliseconds, 'MM-dd HH:mm');
     }
     return f(milliseconds, 'yyyy-MM-dd HH:mm');
@@ -59,8 +57,7 @@ class Format {
 
     final secondsString = formatTime(seconds);
 
-    final formattedTime =
-        '${needHour ? hoursString == '00' ? '' : '$hoursString:' : ''}$minutesString:$secondsString';
+    final formattedTime = '${needHour ? hoursString == '00' ? '' : '$hoursString:' : ''}$minutesString:$secondsString';
 
     return formattedTime;
   }
@@ -83,15 +80,15 @@ class Format {
     }
 
     if (diff < const Duration(hours: 1)) {
-      return '${diff.inMilliseconds ~/ minutesMilli}分钟前';
+      return '${diff.inMilliseconds ~/ kMinutesMilli}分钟前';
     }
 
     if (diff < const Duration(hours: 4)) {
-      return '${diff.inMilliseconds ~/ hourMilli}小时前';
+      return '${diff.inMilliseconds ~/ kHourMilli}小时前';
     }
 
     // 今天
-    if (date.isSameDay(now)) {
+    if (date.equalTo(now)) {
       return f(milliseconds, 'HH:mm');
     }
 
@@ -136,45 +133,7 @@ class Format {
       assert(false, '');
       return '';
     }
-    const List<String> chineseDigits = [
-      '一',
-      '二',
-      '三',
-      '四',
-      '五',
-      '六',
-      '七',
-      '八',
-      '九',
-      '十',
-      '十一',
-      '十二'
-    ];
+    const List<String> chineseDigits = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
     return '${chineseDigits[month - 1]}月';
-  }
-}
-
-extension DateTimeExtra on DateTime {
-  // 同一天
-  bool isSameDay(DateTime other) {
-    return year == other.year && month == other.month && day == other.day;
-  }
-
-  // 今天
-  bool isToday() {
-    final now = DateTime.now();
-    return year == now.year && month == now.month && day == now.day;
-  }
-
-  // 昨天
-  bool isYesterday() {
-    final now = DateTime.now();
-    return year == now.year && month == now.month && day == now.day - 1;
-  }
-
-  // 前天
-  bool isBeforeYesterday() {
-    final now = DateTime.now();
-    return year == now.year && month == now.month && day == now.day - 2;
   }
 }

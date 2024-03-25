@@ -1,13 +1,13 @@
 import 'dart:async';
 
-export 'date.dart';
-export 'line_func.dart';
+export '../extensions/date.dart';
 export 'logger.dart';
 export 'ragex.dart';
 export 'retry.dart';
 export 'rsa.dart';
 export 'throttle.dart';
 export 'uuid.dart';
+export 'date_format.dart';
 
 bool get debug {
   bool inDebugMode = false;
