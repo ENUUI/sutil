@@ -95,4 +95,9 @@ extension DateTimeExtra on DateTime {
   DateTime nextDay([int offset = 1]) {
     return DateTime(year, month, day + offset);
   }
+
+  /// 计算两个时间相差的月份，没有考虑天数级别上的精确度
+  int calculateMonthDifference(DateTime other) {
+    return (other.year - year) * 12 + other.month - month;
+  }
 }
