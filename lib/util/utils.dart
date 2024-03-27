@@ -2,6 +2,7 @@ import 'dart:async';
 
 export '../extensions/date.dart';
 export 'logger.dart';
+export 'obj.dart';
 export 'ragex.dart';
 export 'retry.dart';
 export 'rsa.dart';
