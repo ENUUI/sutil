@@ -100,3 +100,17 @@ class ArgumentException implements IException {
     return 'ArgumentException{display: $display, field: $field, value: $value}';
   }
 }
+
+class NotFoundException implements IException {
+  const NotFoundException({this.display = '未找到数据', this.error});
+
+  @override
+  final String display;
+
+  final Object? error;
+
+  @override
+  String toString() {
+    return 'NotFoundException{display: $display, error: $error}';
+  }
+}
