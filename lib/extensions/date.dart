@@ -97,7 +97,14 @@ extension DateTimeExtra on DateTime {
   }
 
   /// 计算两个时间相差的月份，没有考虑天数级别上的精确度
-  int calculateMonthDifference(DateTime other) {
+  int differenceInMonths(DateTime other) {
     return (other.year - year) * 12 + other.month - month;
+  }
+
+  /// 计算两个时间相差的天数, 自然日，不考虑时分秒
+  int differenceInDays(DateTime other) {
+    final thisDay = startOfDay;
+    final otherDay = other.startOfDay;
+    return thisDay.difference(otherDay).inDays;
   }
 }
