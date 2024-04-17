@@ -1,7 +1,30 @@
 import 'package:test/test.dart';
-import 'package:sutil/sutil.dart' show Format;
+import 'package:sutil/sutil.dart' show Format, Tick;
 
 void main() {
+  group('Tick', () {
+    test('Tick format', () {
+      final date = DateTime(2021, 10, 20, 1, 1, 1);
+      final tick = Tick(date.millisecondsSinceEpoch);
+      expect(tick.date, DateTime(2021, 10, 20, 1, 1, 1));
+      expect(tick.format(), '2021-10-20 01:01:01');
+      expect(tick.format('yyyy/MM/dd HH:mm'), '2021/10/20 01:01');
+    });
+
+    test('Tick parse', () {
+      final date = '2021-10-20 01:01:01';
+      final tick = Tick.tryParse(date);
+      expect(tick?.date, DateTime(2021, 10, 20, 1, 1, 1));
+    });
+
+    test('Tick parse format', () {
+      final date = '2021-10-20 01:01:01';
+      final layout = 'yyyy-MM-dd HH:mm:ss';
+      final tick = Tick.tryParse(date, layout);
+      expect(tick?.date, DateTime(2021, 10, 20, 1, 1, 1));
+    });
+  });
+
   group('Date tests', () {
     test('Format date', () {
       final date = DateTime(2021, 10, 20, 1, 1, 1, 1, 1);

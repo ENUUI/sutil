@@ -17,7 +17,7 @@ class Tick {
   ///
   /// If the date string is invalid, throw a [FormatException]
   /// return [Tick]
-  static Tick parse(String date, [String f = 'yyyy-MM-dd HH:mm']) {
+  static Tick parse(String date, [String f = '']) {
     final DateTime dateTime;
     if (f.isEmpty) {
       dateTime = DateTime.parse(date);
@@ -28,7 +28,7 @@ class Tick {
     return dateTime.toTick();
   }
 
-  static Tick? tryParse(String date, [String f = 'yyyy-MM-dd HH:mm']) {
+  static Tick? tryParse(String date, [String f = '']) {
     try {
       return parse(date, f);
     } catch (_) {
@@ -41,7 +41,7 @@ class Tick {
 
   DateTime get date => DateTime.fromMillisecondsSinceEpoch(milliseconds);
 
-  String format([String f = 'yyyy-MM-dd HH:mm', String? locale]) {
+  String format([String f = 'yyyy-MM-dd HH:mm:ss', String? locale]) {
     return DateFormat(f, locale).format(date);
   }
 
