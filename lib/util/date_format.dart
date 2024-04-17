@@ -14,24 +14,21 @@ class Format {
 
   static String nowTime([String f = 'yyyy年MM月']) => Format.f(now(), f);
 
-  static String f(int milliseconds, [String f = 'yyyy年MM月dd日', bool accurateMonth = false]) {
-    if (accurateMonth) {
-      milliseconds = (milliseconds ~/ (3600 * 1000)) * 3600 * 1000;
-    }
+  static String f(int milliseconds, [String f = 'yyyy年MM月dd日', String? locale]) {
     final date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
-    return DateFormat(f).format(date);
+    return DateFormat(f, locale).format(date);
   }
 
-  static String formatYear(int milliseconds) {
+  static String formatYear(int milliseconds, [String? locale]) {
     if (DateTime.now().year == DateTime.fromMillisecondsSinceEpoch(milliseconds).year) {
-      return f(milliseconds, 'MM-dd HH:mm');
+      return f(milliseconds, 'MM-dd HH:mm', locale);
     }
-    return f(milliseconds, 'yyyy-MM-dd HH:mm');
+    return f(milliseconds, 'yyyy-MM-dd HH:mm', locale);
   }
 
-  static int? p(String date, [String f = 'yyyy年MM月dd日']) {
+  static int? p(String date, [String f = 'yyyy年MM月dd日', String? locale]) {
     try {
-      return DateFormat(f).parse(date).millisecondsSinceEpoch;
+      return DateFormat(f, locale).parse(date).millisecondsSinceEpoch;
     } catch (_) {
       return null;
     }
@@ -67,7 +64,7 @@ class Format {
     String todayTime = 'HH:mm',
     String thisYearPattern = 'M月d日',
     String yearPattern = 'yyyy年M月d日',
-    bool accurateMonth = false,
+    String? locale,
   }) {
     final date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
 
@@ -89,23 +86,23 @@ class Format {
 
     // 今天
     if (date.equalTo(now)) {
-      return f(milliseconds, 'HH:mm');
+      return f(milliseconds, 'HH:mm', locale);
     }
 
     // 昨天
     if (date.isYesterday()) {
-      return '昨天 ${f(milliseconds, todayTime)}';
+      return '昨天 ${f(milliseconds, todayTime, locale)}';
     }
 
     if (diff < const Duration(days: 7)) {
-      return '${weekdayName(date.weekday)} ${f(milliseconds, 'HH:mm')}';
+      return '${weekdayName(date.weekday)} ${f(milliseconds, 'HH:mm', locale)}';
     }
 
     if (date.year == now.year) {
-      return f(milliseconds, thisYearPattern, accurateMonth);
+      return f(milliseconds, thisYearPattern, locale);
     }
 
-    return f(milliseconds, yearPattern, accurateMonth);
+    return f(milliseconds, yearPattern, locale);
   }
 
   static String weekdayName(int weekday) {
