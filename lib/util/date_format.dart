@@ -7,20 +7,52 @@ const kHourMilli = 60 * kMinutesMilli;
 const kDayMilli = 24 * kHourMilli;
 
 class Tick {
+  static Tick now() => Tick(DateTime.now().millisecondsSinceEpoch);
+
   const Tick(this.milliseconds);
+
+  /// Parse a date string to [Tick]
+  /// [date] date string
+  /// [f] format string, default is 'yyyy-MM-dd HH:mm'
+  ///
+  /// If the date string is invalid, throw a [FormatException]
+  /// return [Tick]
+  static Tick parse(String date, [String f = 'yyyy-MM-dd HH:mm']) {
+    final DateTime dateTime;
+    if (f.isEmpty) {
+      dateTime = DateTime.parse(date);
+    } else {
+      dateTime = DateFormat(f).parse(date);
+    }
+
+    return dateTime.toTick();
+  }
+
+  static Tick? tryParse(String date, [String f = 'yyyy-MM-dd HH:mm']) {
+    try {
+      return parse(date, f);
+    } catch (_) {
+      // FormatException
+      return null;
+    }
+  }
 
   final int milliseconds;
 
   DateTime get date => DateTime.fromMillisecondsSinceEpoch(milliseconds);
 
-  String format([String f = 'yyyy年MM月dd日', String? locale]) {
+  String format([String f = 'yyyy-MM-dd HH:mm', String? locale]) {
     return DateFormat(f, locale).format(date);
   }
 
-  static Tick now() => Tick(DateTime.now().millisecondsSinceEpoch);
-
   @override
   String toString() => 'Tick(milliseconds: $milliseconds, date: $date)';
+}
+
+/// DateTime extension
+extension DateTimeTickExtra on DateTime {
+  /// Convert [DateTime] to [Tick]
+  Tick toTick() => Tick(millisecondsSinceEpoch);
 }
 
 /// 格式化时间
