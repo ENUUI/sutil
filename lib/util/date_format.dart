@@ -6,6 +6,23 @@ const kMinutesMilli = 60 * kSecondMilli;
 const kHourMilli = 60 * kMinutesMilli;
 const kDayMilli = 24 * kHourMilli;
 
+class Tick {
+  const Tick(this.milliseconds);
+
+  final int milliseconds;
+
+  DateTime get date => DateTime.fromMillisecondsSinceEpoch(milliseconds);
+
+  String format([String f = 'yyyy年MM月dd日', String? locale]) {
+    return DateFormat(f, locale).format(date);
+  }
+
+  static Tick now() => Tick(DateTime.now().millisecondsSinceEpoch);
+
+  @override
+  String toString() => 'Tick(milliseconds: $milliseconds, date: $date)';
+}
+
 /// 格式化时间
 class Format {
   Format._();
