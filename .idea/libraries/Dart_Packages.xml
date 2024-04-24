@@ -121,13 +121,6 @@
             </list>
           </value>
         </entry>
-        <entry key="event_ship">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/git/event_ship-eef673cb9bf0a5b4aeca33f4590b09e3e15d8408//lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="ffi">
           <value>
             <list>
@@ -589,7 +582,6 @@
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/packages/flutter/lib" />
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/packages/flutter_web_plugins/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/git/event_ship-eef673cb9bf0a5b4aeca33f4590b09e3e15d8408//lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/_fe_analyzer_shared-67.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/analyzer-6.4.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/args-2.4.2/lib" />
