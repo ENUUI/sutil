@@ -102,6 +102,7 @@ extension DateTimeExtra on DateTime {
   }
 
   /// 计算两个时间相差的天数, 自然日，不考虑时分秒
+  /// 2021-10-20 23:59:59 和 2021-10-21 00:00:00 也是 1 天
   int differenceInDays(DateTime other) {
     final thisDay = startOfDay;
     final otherDay = other.startOfDay;

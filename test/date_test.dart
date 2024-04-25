@@ -190,5 +190,19 @@ void main() {
       expect(dt.compareWith(dt4, DatetimeType.microsecond), 0);
       expect(dt.equalTo(dt4, DatetimeType.microsecond), true);
     });
+
+    test('differenceInDays', () {
+      final d1 = DateTime(2021, 10, 20);
+      final d2 = DateTime(2021, 10, 21);
+
+      expect(d1.differenceInDays(d2), -1);
+    });
+
+    test('differenceInDays', () {
+      final d1 = DateTime(2021, 10, 20);
+      final d2 = DateTime(2021, 11, 1);
+
+      expect(d1.differenceInDays(d2), -12);
+    });
   });
 }
